@@ -51,6 +51,7 @@
 		<div class="hidden items-center gap-1 md:flex" role="menubar">
 			{#each navLinks as link}
 				<a
+				data-astro-prefetch
 					href={link.href}
 					class="rounded-lg px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 					role="menuitem"
@@ -179,6 +180,7 @@
 									<a
 										{...props}
 										href={link.href}
+										data-astro-prefetch
 										class="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
 									>
 										{link.label}
@@ -192,6 +194,7 @@
 								{#snippet child({ props })}
 									<a
 										{...props}
+										data-astro-prefetch
 										href={link.href}
 										class="rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 									>

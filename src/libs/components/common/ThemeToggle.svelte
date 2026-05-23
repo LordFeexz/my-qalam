@@ -3,6 +3,7 @@
 	import { onMount, tick } from "svelte";
 
 	let isDark = $state(false);
+	let lastToggle = 0;
 
 	onMount(() => {
 		// Initialize state
@@ -21,16 +22,36 @@
 		return () => observer.disconnect();
 	});
 
-	async function handleToggle(e: MouseEvent) {
-		const willBeDark = !isDark;
+	async function handleToggle(e: MouseEvent | TouchEvent) {
+		// Prevent double-firing from both touchstart and click events
+		if (Date.now() - lastToggle < 500) return;
+		lastToggle = Date.now();
+
+		const willBeDark = !document.documentElement.classList.contains("dark");
+		
+		if (typeof localStorage !== 'undefined') {
+			localStorage.setItem("theme", willBeDark ? "dark" : "light");
+		}
 		
 		if (!document.startViewTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 			document.documentElement.classList.toggle("dark", willBeDark);
 			return;
 		}
 
-		const x = e.clientX;
-		const y = e.clientY;
+		let x = window.innerWidth / 2;
+		let y = window.innerHeight / 2;
+		
+		if (e.type === 'touchstart') {
+			const touch = (e as TouchEvent).touches[0];
+			if (touch) {
+				x = touch.clientX;
+				y = touch.clientY;
+			}
+		} else {
+			x = (e as MouseEvent).clientX ?? x;
+			y = (e as MouseEvent).clientY ?? y;
+		}
+
 		const endRadius = Math.hypot(
 			Math.max(x, innerWidth - x),
 			Math.max(y, innerHeight - y)
@@ -40,6 +61,12 @@
 			document.documentElement.classList.toggle("dark", willBeDark);
 			await tick();
 		});
+
+		// Skip custom clip-path animation on mobile, fallback to smooth native crossfade
+		// because Web Animations API on pseudo-elements is buggy on mobile Safari
+		if (window.innerWidth < 768) {
+			return;
+		}
 
 		transition.ready.then(() => {
 			const clipPath = [
@@ -51,8 +78,8 @@
 					clipPath: willBeDark ? clipPath.reverse() : clipPath
 				},
 				{
-					duration: 400,
-					easing: "ease-in-out",
+					duration: 350,
+					easing: willBeDark ? "ease-in" : "ease-out",
 					pseudoElement: willBeDark
 						? "::view-transition-old(root)"
 						: "::view-transition-new(root)"
@@ -66,6 +93,7 @@
 	variant="ghost"
 	size="icon-sm"
 	onclick={handleToggle}
+	ontouchstart={handleToggle}
 	aria-label="Toggle theme"
 >
 	{#if isDark}
@@ -113,6 +141,7 @@
 	:global(::view-transition-new(root)) {
 		animation: none;
 		mix-blend-mode: normal;
+		will-change: clip-path;
 	}
 	:global(::view-transition-old(root)) {
 		z-index: 1;

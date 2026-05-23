@@ -1,0 +1,80 @@
+---
+export const prerender = true;
+
+import Root from "$libs/components/layouts/Root.astro";
+import ChapterCard from "$libs/components/sirah/ChapterCard.astro";
+import { getAllSirahChapters } from "$libs/db/queries/sirah.queries";
+import type { PageProps } from "$libs/interfaces/global";
+import type { BreadcrumbList, ItemList, WebPage } from "schema-dts";
+
+const chapters = await getAllSirahChapters();
+const baseUrl = import.meta.env.PUBLIC_DOMAIN;
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Sirah Nabawiyah - My Qalam",
+    description: "Pelajari sejarah dan perjalanan hidup Nabi Muhammad SAW (Sirah Nabawiyah).",
+  } as WebPage,
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Beranda", item: baseUrl },
+      { "@type": "ListItem", position: 2, name: "Sirah Nabawiyah", item: `${baseUrl}/sirah` }
+    ]
+  } as BreadcrumbList,
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: chapters.map((chapter, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: chapter.title,
+      url: `${baseUrl}/sirah/${chapter.slug}`
+    }))
+  } as ItemList
+];
+
+const pageProps: PageProps = {
+  title: "Sirah Nabawiyah - My Qalam",
+  description: "Pelajari sejarah dan perjalanan hidup Nabi Muhammad SAW (Sirah Nabawiyah) secara lengkap dan terstruktur.",
+  keywords: ["Sirah", "Nabawiyah", "Sejarah Islam", "Nabi Muhammad", "kisah nabi", "sejarah nabi muhammad"],
+  robots: { index: true, follow: true },
+  opengraph: {
+    title: "Sirah Nabawiyah - My Qalam",
+    description: "Pelajari sejarah dan perjalanan hidup Nabi Muhammad SAW secara lengkap dan terstruktur.",
+    image: `${baseUrl}/logo.png`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sirah Nabawiyah - My Qalam",
+    description: "Pelajari sejarah dan perjalanan hidup Nabi Muhammad SAW secara lengkap dan terstruktur.",
+    image: `${baseUrl}/logo.png`,
+  },
+  schemas
+};
+---
+
+<Root {...pageProps}>
+  <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+    <div class="mb-10 text-center">
+      <h1 class="text-3xl font-bold tracking-tight mb-2">Sirah Nabawiyah</h1>
+      <p class="text-muted-foreground">Perjalanan sejarah kehidupan Nabi Muhammad ﷺ.</p>
+    </div>
+    
+    <div class="flex flex-col max-w-2xl mx-auto">
+      {chapters.map((chapter) => (
+        <ChapterCard 
+          title={chapter.title}
+          slug={chapter.slug}
+          description={chapter.description}
+          yearLabel={chapter.yearLabel}
+          href={`/sirah/${chapter.slug}`}
+        />
+      ))}
+    </div>
+  </div>
+</Root>

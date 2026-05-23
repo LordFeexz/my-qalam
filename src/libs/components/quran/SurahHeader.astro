@@ -1,0 +1,45 @@
+---
+import BookmarkButton from "$libs/components/common/BookmarkButton.svelte";
+
+interface Props {
+  surah: {
+    number: number;
+    nameArabic: string;
+    nameLatin: string;
+    totalAyah: number;
+    revelationPlace?: string | null;
+  };
+}
+
+const { surah } = Astro.props;
+---
+
+<div class="w-full rounded-2xl bg-primary/5 border border-primary/10 p-8 text-center my-8">
+  <div class="flex items-center justify-center gap-4 mb-4">
+    <div class="text-3xl font-arabic text-primary" style="font-family: 'KFGQPC Uthman Taha Naskh', serif;" dir="rtl">
+      {surah.nameArabic}
+    </div>
+  </div>
+  
+  <div class="flex items-center justify-center gap-3 mb-2">
+    <h1 class="text-2xl font-bold">{surah.nameLatin}</h1>
+    <BookmarkButton 
+      client:load 
+      item={{
+        id: `surah-${surah.number}`,
+        type: 'surah',
+        number: surah.number,
+        nameLatin: surah.nameLatin,
+        nameArabic: surah.nameArabic,
+        totalAyah: surah.totalAyah,
+        savedAt: 0
+      }} 
+    />
+  </div>
+  
+  <div class="flex items-center justify-center gap-3 text-sm text-muted-foreground">
+    <span class="capitalize">{surah.revelationPlace}</span>
+    <span>•</span>
+    <span>{surah.totalAyah} Ayat</span>
+  </div>
+</div>

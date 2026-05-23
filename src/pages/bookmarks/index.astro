@@ -1,0 +1,49 @@
+---
+export const prerender = true;
+import Root from "$libs/components/layouts/Root.astro";
+import BookmarksPage from "$libs/components/bookmarks/BookmarksPage.svelte";
+import type { PageProps } from "$libs/interfaces/global";
+import type { WebPage } from "schema-dts";
+
+const baseUrl = import.meta.env.PUBLIC_DOMAIN;
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Penanda Saya - My Qalam",
+    description: "Daftar penanda surah, ayat, kitab hadis, hadis, dan sirah yang telah Anda simpan.",
+  } as WebPage
+];
+
+const pageProps: PageProps = {
+  title: "Penanda Saya - My Qalam",
+  description: "Daftar penanda surah, ayat, kitab hadis, hadis, dan sirah yang telah Anda simpan.",
+  keywords: ["Penanda", "Bookmark", "My Qalam", "Favorit"],
+  robots: { index: false, follow: false },
+  opengraph: {
+    title: "Penanda Saya - My Qalam",
+    description: "Daftar penanda konten Islami favorit Anda.",
+    image: `${baseUrl}/logo.png`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Penanda Saya - My Qalam",
+    description: "Daftar penanda konten Islami favorit Anda.",
+    image: `${baseUrl}/logo.png`,
+  },
+  schemas
+};
+---
+
+<Root {...pageProps}>
+  <div class="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold tracking-tight mb-2">Penanda Saya</h1>
+      <p class="text-muted-foreground">Kelola dan akses cepat konten yang telah Anda simpan.</p>
+    </div>
+    
+    <BookmarksPage client:only="svelte" />
+  </div>
+</Root>

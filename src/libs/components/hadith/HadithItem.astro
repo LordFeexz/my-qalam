@@ -1,0 +1,40 @@
+---
+interface Props {
+  number: number;
+  arabicText: string;
+  translationId: string;
+  grade?: string | null;
+  href: string;
+}
+
+const { number, arabicText, translationId, grade, href } = Astro.props;
+---
+
+<a href={href} class="block p-5 rounded-xl border border-border/40 bg-card hover:border-border transition-colors mb-4 group">
+  <div class="flex items-center justify-between mb-4">
+    <div class="flex items-center gap-3">
+      <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-muted text-xs font-medium">
+        {number}
+      </span>
+      <span class="text-sm font-medium group-hover:text-primary transition-colors">Lihat Detail</span>
+    </div>
+    
+    {grade && (
+      <span class="text-xs px-2 py-1 rounded-md bg-secondary text-secondary-foreground font-medium">
+        {grade}
+      </span>
+    )}
+  </div>
+
+  <div 
+    class="text-right text-2xl leading-[2.5] text-foreground font-arabic w-full mb-4 line-clamp-3"
+    style="font-family: 'KFGQPC Uthman Taha Naskh', 'Amiri', serif;" 
+    dir="rtl"
+  >
+    {arabicText}
+  </div>
+
+  <div class="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+    {translationId}
+  </div>
+</a>

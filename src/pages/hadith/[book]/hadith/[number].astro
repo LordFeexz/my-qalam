@@ -1,0 +1,206 @@
+---
+export const prerender = true;
+import BookmarkButton from "$libs/components/common/BookmarkButton.svelte";
+import Root from "$libs/components/layouts/Root.astro";
+import { getAllHadithBooks } from "$libs/db/queries/hadith.queries";
+import { db } from "$libs/db/index";
+import { hadiths as hadithSchema } from "$libs/db/schema";
+import { eq } from "drizzle-orm";
+import type { PageProps } from "$libs/interfaces/global";
+import type { Article, BreadcrumbList, WebPage } from "schema-dts";
+
+export async function getStaticPaths() {
+  const books = await getAllHadithBooks();
+  const paths = [];
+
+  for (const book of books) {
+    // Instead of mapping large arrays of hadiths to memory, we pull only what's needed
+    // However, ~38k paths might be too much memory for one getStaticPaths execution if we pull all DB records.
+    // So we fetch just the numbers.
+    const hadithNumbers = await db
+      .select({ number: hadithSchema.number })
+      .from(hadithSchema)
+      .where(eq(hadithSchema.bookId, book.id));
+
+    for (const h of hadithNumbers) {
+      paths.push({
+        params: { book: book.slug, number: h.number.toString() },
+        props: { book },
+      });
+    }
+  }
+
+  return paths;
+}
+
+import { getHadithByBookAndNumber } from "$libs/db/queries/hadith.queries";
+
+const { book } = Astro.props;
+const number = parseInt(Astro.params.number as string);
+const hadith = await getHadithByBookAndNumber(book.id, number);
+
+const baseUrl = import.meta.env.PUBLIC_DOMAIN;
+const description = hadith 
+  ? `Baca hadis dari kitab ${book.name} nomor ${number}. ${hadith.translationId.slice(0, 150)}...` 
+  : `Baca hadis dari kitab ${book.name} nomor ${number}.`;
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: `Hadis ${book.name} No. ${number} - My Qalam`,
+    description,
+  } as WebPage,
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Beranda", item: baseUrl },
+      { "@type": "ListItem", position: 2, name: "Kitab Hadis", item: `${baseUrl}/hadith` },
+      { "@type": "ListItem", position: 3, name: book.name, item: `${baseUrl}/hadith/${book.slug}/1` },
+      { "@type": "ListItem", position: 4, name: `No. ${number}`, item: `${baseUrl}/hadith/${book.slug}/hadith/${number}` }
+    ]
+  } as BreadcrumbList,
+  ...(hadith ? [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `Hadis ${book.name} No. ${number}`,
+    description: hadith.translationId,
+    author: {
+      "@type": "Person",
+      name: book.name
+    }
+  } as Article] : [])
+];
+
+const pageProps: PageProps = {
+  title: `Hadis ${book.name} No. ${number} - My Qalam`,
+  description,
+  keywords: ["Hadis", book.name, "nomor", number.toString(), "sunnah", hadith?.chapter || ""].filter(Boolean),
+  robots: { index: !!hadith, follow: !!hadith },
+  opengraph: {
+    title: `Hadis ${book.name} No. ${number} - My Qalam`,
+    description,
+    image: `${baseUrl}/logo.png`,
+    type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Hadis ${book.name} No. ${number} - My Qalam`,
+    description,
+    image: `${baseUrl}/logo.png`,
+  },
+  schemas
+};
+---
+
+<Root {...pageProps}>
+  <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+    <div class="mb-8 border-b border-border/40 pb-6">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+        <a href="/hadith" class="hover:text-primary transition-colors"
+          >Kitab Hadis</a
+        >
+        <span>/</span>
+        <a
+          href={`/hadith/${book.slug}/1`}
+          class="hover:text-primary transition-colors">{book.name}</a
+        >
+        <span>/</span>
+        <span class="text-foreground">No. {number}</span>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <h1 class="text-2xl font-bold tracking-tight">
+            {book.name} - No. {number}
+          </h1>
+          <BookmarkButton
+            client:load
+            item={{
+              id: `hadith-${book.slug}-${number}`,
+              type: "hadith",
+              bookSlug: book.slug,
+              bookName: book.name,
+              number: number,
+              translationSnippet: hadith
+                ? hadith.translationId.slice(0, 120) +
+                  (hadith.translationId.length > 120 ? "..." : "")
+                : "",
+              grade: hadith?.grade,
+              savedAt: 0,
+            }}
+          />
+        </div>
+        {
+          hadith?.grade && (
+            <span class="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm font-medium">
+              {hadith.grade}
+            </span>
+          )
+        }
+      </div>
+
+      {
+        hadith?.chapter && (
+          <div class="mt-4 text-sm text-muted-foreground">
+            Bab:{" "}
+            <span class="font-medium text-foreground/80">{hadith.chapter}</span>
+          </div>
+        )
+      }
+    </div>
+
+    {
+      hadith ? (
+        <div class="flex flex-col gap-8 py-4">
+          <div
+            class="text-right text-3xl leading-[2.5] text-foreground font-arabic w-full"
+            style="font-family: 'KFGQPC Uthman Taha Naskh', 'Amiri', serif;"
+            dir="rtl"
+          >
+            {hadith.arabicText}
+          </div>
+
+          <div class="text-lg text-foreground/90 leading-relaxed border-t border-border/40 pt-8">
+            {hadith.translationId}
+          </div>
+        </div>
+      ) : (
+        <div class="py-12 text-center text-muted-foreground">
+          Hadis tidak ditemukan.
+        </div>
+      )
+    }
+
+    <div
+      class="mt-12 flex justify-between items-center border-t border-border/40 pt-8"
+    >
+      {
+        number > 1 ? (
+          <a
+            href={`/hadith/${book.slug}/hadith/${number - 1}`}
+            class="text-sm font-medium hover:text-primary transition-colors"
+          >
+            &larr; Hadis Sebelumnya
+          </a>
+        ) : (
+          <div />
+        )
+      }
+
+      {
+        number < (book.totalHadith || Infinity) ? (
+          <a
+            href={`/hadith/${book.slug}/hadith/${number + 1}`}
+            class="text-sm font-medium hover:text-primary transition-colors"
+          >
+            Hadis Selanjutnya &rarr;
+          </a>
+        ) : (
+          <div />
+        )
+      }
+    </div>
+  </div>
+</Root>
