@@ -2,18 +2,27 @@
 export const prerender = true;
 import Root from "$libs/components/layouts/Root.astro";
 import HadithItem from "$libs/components/hadith/HadithItem.astro";
-import { getAllHadithBooks, getHadithsByBookPaginated, getTotalHadithPages } from "$libs/db/queries/hadith.queries";
+import {
+  getAllHadithBooks,
+  getHadithsByBookPaginated,
+  getTotalHadithPages,
+} from "$libs/db/queries/hadith.queries";
 import type { PageProps } from "$libs/interfaces/global";
-import type { BreadcrumbList, ItemList, WebPage } from "schema-dts";
+import type {
+  BreadcrumbList,
+  ItemList,
+  WebPage,
+  WithContext,
+} from "schema-dts";
 
-export async function getStaticPaths({ paginate }: { paginate: any }) {
+export async function getStaticPaths() {
   const books = await getAllHadithBooks();
-  
+
   // To avoid fetching all hadiths into memory at once for pagination,
   // we will construct the paths manually for each page.
   // Astro's native `paginate` usually requires passing the full array,
   // but since we query per page, we will return an array of paths directly.
-  
+
   const LIMIT = 100;
   const paths = [];
 
@@ -22,11 +31,11 @@ export async function getStaticPaths({ paginate }: { paginate: any }) {
     for (let page = 1; page <= totalPages; page++) {
       paths.push({
         params: { book: book.slug, page: page.toString() },
-        props: { book, page, totalPages, limit: LIMIT }
+        props: { book, page, totalPages, limit: LIMIT },
       });
     }
   }
-  
+
   return paths;
 }
 
@@ -42,16 +51,26 @@ const schemas = [
     "@type": "WebPage",
     name: `${book.name} (Halaman ${page}) - My Qalam`,
     description,
-  } as WebPage,
+  } as WithContext<WebPage>,
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Beranda", item: baseUrl },
-      { "@type": "ListItem", position: 2, name: "Kitab Hadis", item: `${baseUrl}/hadith` },
-      { "@type": "ListItem", position: 3, name: book.name, item: `${baseUrl}/hadith/${book.slug}/1` }
-    ]
-  } as BreadcrumbList,
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Kitab Hadis",
+        item: `${baseUrl}/hadith`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: book.name,
+        item: `${baseUrl}/hadith/${book.slug}/1`,
+      },
+    ],
+  } as WithContext<BreadcrumbList>,
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -59,15 +78,22 @@ const schemas = [
       "@type": "ListItem",
       position: index + 1,
       name: `Hadis No. ${h.number}`,
-      url: `${baseUrl}/hadith/${book.slug}/hadith/${h.number}`
-    }))
-  } as ItemList
+      url: `${baseUrl}/hadith/${book.slug}/hadith/${h.number}`,
+    })),
+  } as WithContext<ItemList>,
 ];
 
 const pageProps: PageProps = {
   title: `${book.name} (Halaman ${page}) - My Qalam`,
   description,
-  keywords: ["Hadis", book.name, "halaman", page.toString(), book.slug, "kumpulan hadis"],
+  keywords: [
+    "Hadis",
+    book.name,
+    "halaman",
+    page.toString(),
+    book.slug,
+    "kumpulan hadis",
+  ],
   robots: { index: true, follow: true },
   opengraph: {
     title: `${book.name} (Halaman ${page}) - My Qalam`,
@@ -81,7 +107,7 @@ const pageProps: PageProps = {
     description,
     image: `${baseUrl}/logo.png`,
   },
-  schemas
+  schemas,
 };
 ---
 
@@ -89,11 +115,13 @@ const pageProps: PageProps = {
   <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6">
     <div class="mb-8 border-b border-border/40 pb-6">
       <div class="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-        <a href="/hadith" class="hover:text-primary transition-colors">Kitab Hadis</a>
+        <a href="/hadith" class="hover:text-primary transition-colors"
+          >Kitab Hadis</a
+        >
         <span>/</span>
         <span class="text-foreground">{book.name}</span>
       </div>
-      
+
       <div class="flex items-end justify-between">
         <div>
           <h1 class="text-3xl font-bold tracking-tight mb-2">{book.name}</h1>
@@ -101,36 +129,48 @@ const pageProps: PageProps = {
         </div>
       </div>
     </div>
-    
+
     <div class="flex flex-col">
-      {hadiths.map((h) => (
-        <HadithItem 
-          number={h.number}
-          arabicText={h.arabicText}
-          translationId={h.translationId}
-          grade={h.grade}
-          href={`/hadith/${book.slug}/hadith/${h.number}`}
-        />
-      ))}
+      {
+        hadiths.map((h) => (
+          <HadithItem
+            number={h.number}
+            arabicText={h.arabicText}
+            translationId={h.translationId}
+            grade={h.grade}
+            href={`/hadith/${book.slug}/hadith/${h.number}`}
+          />
+        ))
+      }
     </div>
-    
+
     <!-- Pagination -->
     <div class="mt-8 flex items-center justify-center gap-2">
-      {page > 1 && (
-        <a href={`/hadith/${book.slug}/${page - 1}`} class="px-4 py-2 border border-border/60 rounded-lg hover:bg-accent transition-colors text-sm font-medium">
-          Sebelumnya
-        </a>
-      )}
-      
+      {
+        page > 1 && (
+          <a
+            href={`/hadith/${book.slug}/${page - 1}`}
+            class="px-4 py-2 border border-border/60 rounded-lg hover:bg-accent transition-colors text-sm font-medium"
+          >
+            Sebelumnya
+          </a>
+        )
+      }
+
       <span class="px-4 py-2 text-sm text-muted-foreground">
         Halaman {page} dari {totalPages}
       </span>
-      
-      {page < totalPages && (
-        <a href={`/hadith/${book.slug}/${page + 1}`} class="px-4 py-2 border border-border/60 rounded-lg hover:bg-accent transition-colors text-sm font-medium">
-          Selanjutnya
-        </a>
-      )}
+
+      {
+        page < totalPages && (
+          <a
+            href={`/hadith/${book.slug}/${page + 1}`}
+            class="px-4 py-2 border border-border/60 rounded-lg hover:bg-accent transition-colors text-sm font-medium"
+          >
+            Selanjutnya
+          </a>
+        )
+      }
     </div>
   </div>
 </Root>

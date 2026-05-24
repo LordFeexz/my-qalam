@@ -1,0 +1,266 @@
+---
+export const prerender = true;
+import Root from "$libs/components/layouts/Root.astro";
+import type { PageProps } from "$libs/interfaces/global";
+import type { BreadcrumbList, WebPage, WithContext } from "schema-dts";
+
+const baseUrl = import.meta.env.PUBLIC_DOMAIN;
+const lastUpdated = "24 Mei 2026";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Kebijakan Privasi - My Qalam",
+    description:
+      "Kebijakan privasi My Qalam — informasi tentang data yang kami kumpulkan, penggunaan, dan hak Anda sebagai pengguna.",
+  } as WithContext<WebPage>,
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Beranda", item: baseUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Kebijakan Privasi",
+        item: `${baseUrl}/privacy`,
+      },
+    ],
+  } as WithContext<BreadcrumbList>,
+];
+
+const pageProps: PageProps = {
+  title: "Kebijakan Privasi - My Qalam",
+  description:
+    "Kebijakan privasi My Qalam. Pelajari bagaimana kami menangani data Anda di platform belajar Islam ini.",
+  keywords: [
+    "kebijakan privasi",
+    "privacy policy",
+    "my qalam privasi",
+    "data pengguna",
+    "perlindungan data",
+  ],
+  robots: { index: true, follow: true },
+  opengraph: {
+    title: "Kebijakan Privasi - My Qalam",
+    description:
+      "Pelajari bagaimana My Qalam menangani data dan privasi Anda.",
+    image: `${baseUrl}/logo.png`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Kebijakan Privasi - My Qalam",
+    description:
+      "Pelajari bagaimana My Qalam menangani data dan privasi Anda.",
+    image: `${baseUrl}/logo.png`,
+  },
+  schemas,
+};
+---
+
+<Root {...pageProps}>
+  <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+    <div class="mb-12">
+      <div class="inline-flex items-center gap-2 rounded-full border border-border/50 bg-muted/50 px-4 py-1.5 text-sm text-muted-foreground mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Dokumen Legal
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Kebijakan Privasi</h1>
+      <p class="text-muted-foreground">Terakhir diperbarui: {lastUpdated}</p>
+    </div>
+
+    <div class="prose-custom space-y-12">
+      <!-- 1. Introduction -->
+      <section id="introduction">
+        <h2 class="text-xl font-semibold mb-3">1. Pendahuluan</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>My Qalam ("kami", "platform") adalah platform belajar Islam yang dikembangkan oleh Ruang Cipta Digital. Kami menghargai privasi Anda dan berkomitmen untuk melindungi data pribadi yang Anda percayakan kepada kami.</p>
+          <p>Kebijakan privasi ini menjelaskan jenis informasi yang kami kumpulkan, bagaimana kami menggunakannya, dan hak-hak Anda sebagai pengguna. Dokumen ini ditulis secara sederhana agar mudah dipahami oleh semua kalangan.</p>
+          <p>Dengan menggunakan My Qalam, Anda menyetujui praktik yang dijelaskan dalam kebijakan ini.</p>
+        </div>
+      </section>
+
+      <!-- 2. Information We Collect -->
+      <section id="information-collected">
+        <h2 class="text-xl font-semibold mb-3">2. Informasi yang Kami Kumpulkan</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Saat ini, My Qalam <strong class="text-foreground">tidak memerlukan pendaftaran akun</strong> untuk mengakses konten. Berikut informasi yang mungkin kami kumpulkan:</p>
+          <div class="rounded-2xl border border-border/50 bg-card/50 p-6 space-y-4">
+            <div>
+              <h3 class="text-sm font-semibold text-foreground mb-1">Data Teknis (Otomatis)</h3>
+              <p class="text-sm">Alamat IP, jenis browser, jenis perangkat, dan sistem operasi — dikumpulkan secara otomatis oleh server web dan alat analitik.</p>
+            </div>
+            <hr class="border-border/50" />
+            <div>
+              <h3 class="text-sm font-semibold text-foreground mb-1">Data Penyimpanan Lokal</h3>
+              <p class="text-sm">Bookmark, preferensi tampilan (tema), dan progres bacaan — disimpan di browser Anda (localStorage), bukan di server kami.</p>
+            </div>
+            <hr class="border-border/50" />
+            <div>
+              <h3 class="text-sm font-semibold text-foreground mb-1">Data Chat AI (Jika Tersedia)</h3>
+              <p class="text-sm">Riwayat percakapan dengan asisten AI — saat ini disimpan di browser Anda. Di masa depan, sinkronisasi opsional mungkin tersedia.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. How We Use Information -->
+      <section id="information-usage">
+        <h2 class="text-xl font-semibold mb-3">3. Bagaimana Kami Menggunakan Informasi</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Informasi yang dikumpulkan digunakan untuk:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li>Menyediakan dan meningkatkan layanan platform</li>
+            <li>Memahami pola penggunaan untuk perbaikan UX</li>
+            <li>Menyimpan preferensi pengguna secara lokal</li>
+            <li>Memproses pertanyaan pada fitur asisten AI</li>
+            <li>Menjaga keamanan dan stabilitas platform</li>
+          </ul>
+          <p>Kami <strong class="text-foreground">tidak menjual, menyewakan, atau membagikan</strong> data pribadi Anda kepada pihak ketiga untuk tujuan komersial.</p>
+        </div>
+      </section>
+
+      <!-- 4. Local Storage Usage -->
+      <section id="local-storage">
+        <h2 class="text-xl font-semibold mb-3">4. Penggunaan Penyimpanan Lokal</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>My Qalam menggunakan fitur penyimpanan lokal browser (localStorage) untuk menyimpan:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li>Pengaturan tema (terang/gelap)</li>
+            <li>Daftar bookmark ayat, hadis, atau halaman sirah</li>
+            <li>Riwayat pencarian terbaru</li>
+            <li>Progres bacaan (jika ada)</li>
+            <li>Riwayat percakapan AI (jika fitur tersedia)</li>
+          </ul>
+          <p>Data ini <strong class="text-foreground">hanya tersimpan di perangkat Anda</strong> dan tidak dikirim ke server kami kecuali Anda secara eksplisit mengaktifkan fitur sinkronisasi di masa depan.</p>
+          <p>Anda dapat menghapus data ini kapan saja melalui pengaturan browser Anda (hapus data situs/localStorage).</p>
+        </div>
+      </section>
+
+      <!-- 5. AI Chat Data Handling -->
+      <section id="ai-data">
+        <h2 class="text-xl font-semibold mb-3">5. Penanganan Data Chat AI</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Fitur asisten AI pada My Qalam memungkinkan Anda mengajukan pertanyaan seputar konten Islami. Berikut bagaimana kami menangani data dari fitur ini:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li>Pertanyaan Anda diproses untuk menghasilkan jawaban yang relevan</li>
+            <li>Riwayat chat saat ini disimpan di penyimpanan lokal browser</li>
+            <li>Kami mungkin menggunakan data percakapan secara anonim untuk meningkatkan kualitas AI</li>
+            <li>Kami tidak mengaitkan pertanyaan AI dengan identitas pribadi Anda</li>
+          </ul>
+          <div class="rounded-2xl border border-destructive/20 bg-destructive/5 p-5 mt-4">
+            <p class="text-sm"><strong class="text-foreground">Penting:</strong> Hindari memasukkan informasi pribadi sensitif (nama lengkap, alamat, nomor telepon, dll.) dalam percakapan dengan asisten AI.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Analytics -->
+      <section id="analytics">
+        <h2 class="text-xl font-semibold mb-3">6. Analitik</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Di masa depan, kami berencana menggunakan alat analitik pihak ketiga seperti Google Analytics atau Umami untuk memahami bagaimana platform digunakan. Alat ini mungkin mengumpulkan:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li>Halaman yang dikunjungi dan durasi kunjungan</li>
+            <li>Sumber rujukan (dari mana Anda menemukan My Qalam)</li>
+            <li>Informasi perangkat dan browser secara umum</li>
+            <li>Lokasi geografis secara umum (berdasarkan IP)</li>
+          </ul>
+          <p>Jika kami mengaktifkan analitik pihak ketiga, kami akan memperbarui kebijakan ini dan memberikan transparansi penuh tentang alat yang digunakan.</p>
+        </div>
+      </section>
+
+      <!-- 7. Data Sharing -->
+      <section id="data-sharing">
+        <h2 class="text-xl font-semibold mb-3">7. Berbagi Data</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Kami tidak membagikan data pribadi Anda dengan pihak ketiga, kecuali dalam situasi berikut:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li><strong class="text-foreground">Penyedia layanan:</strong> Pihak ketiga yang membantu kami mengoperasikan platform (hosting, analitik) dengan perjanjian kerahasiaan</li>
+            <li><strong class="text-foreground">Kewajiban hukum:</strong> Jika diwajibkan oleh hukum atau proses hukum yang berlaku di Indonesia</li>
+            <li><strong class="text-foreground">Keamanan:</strong> Untuk melindungi hak, keamanan, atau properti platform dan penggunanya</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 8. Data Retention -->
+      <section id="data-retention">
+        <h2 class="text-xl font-semibold mb-3">8. Penyimpanan Data</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Karena sebagian besar data disimpan secara lokal di browser Anda, Anda memiliki kendali penuh atas retensi data tersebut.</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li><strong class="text-foreground">Data lokal (browser):</strong> Tersimpan hingga Anda menghapusnya secara manual atau membersihkan data browser</li>
+            <li><strong class="text-foreground">Data teknis (server):</strong> Log server disimpan untuk periode terbatas dan dihapus secara berkala</li>
+            <li><strong class="text-foreground">Data analitik:</strong> Mengikuti kebijakan retensi penyedia layanan analitik yang digunakan</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 9. User Rights -->
+      <section id="user-rights">
+        <h2 class="text-xl font-semibold mb-3">9. Hak Pengguna</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Sebagai pengguna My Qalam, Anda memiliki hak untuk:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li><strong class="text-foreground">Mengakses data Anda:</strong> Melihat data yang tersimpan di penyimpanan lokal browser</li>
+            <li><strong class="text-foreground">Menghapus data Anda:</strong> Menghapus semua data lokal melalui pengaturan browser (Settings → Privacy → Clear Site Data)</li>
+            <li><strong class="text-foreground">Menolak analitik:</strong> Menggunakan ekstensi browser pemblokir pelacak jika diinginkan</li>
+            <li><strong class="text-foreground">Bertanya:</strong> Menghubungi kami untuk pertanyaan terkait data Anda</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 10. Security -->
+      <section id="security">
+        <h2 class="text-xl font-semibold mb-3">10. Keamanan</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Kami mengambil langkah-langkah yang wajar untuk melindungi informasi Anda, termasuk:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li>Penggunaan HTTPS untuk enkripsi data dalam transit</li>
+            <li>Pembatasan akses ke infrastruktur server</li>
+            <li>Pembaruan keamanan berkala pada sistem platform</li>
+          </ul>
+          <p>Namun, tidak ada metode transmisi atau penyimpanan elektronik yang 100% aman. Kami tidak dapat menjamin keamanan absolut, tetapi kami berkomitmen untuk terus meningkatkan praktik keamanan kami.</p>
+        </div>
+      </section>
+
+      <!-- 11. Children Privacy -->
+      <section id="children-privacy">
+        <h2 class="text-xl font-semibold mb-3">11. Privasi Anak-Anak</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>My Qalam adalah platform edukasi yang dapat digunakan oleh semua usia. Kami tidak secara sengaja mengumpulkan data pribadi dari anak di bawah 13 tahun.</p>
+          <p>Karena platform ini tidak memerlukan akun dan sebagian besar data disimpan secara lokal, risiko pengumpulan data anak sangat minimal. Jika Anda adalah orang tua atau wali dan percaya bahwa anak Anda telah memberikan informasi pribadi kepada kami, silakan hubungi kami.</p>
+        </div>
+      </section>
+
+      <!-- 12. Changes to Policy -->
+      <section id="policy-changes">
+        <h2 class="text-xl font-semibold mb-3">12. Perubahan Kebijakan</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Kami dapat memperbarui kebijakan privasi ini dari waktu ke waktu, terutama saat:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li>Menambahkan fitur baru (seperti sistem akun atau langganan)</li>
+            <li>Mengintegrasikan layanan pihak ketiga baru</li>
+            <li>Menyesuaikan dengan perubahan regulasi</li>
+          </ul>
+          <p>Perubahan signifikan akan diumumkan melalui platform. Tanggal "terakhir diperbarui" di bagian atas akan mencerminkan revisi terbaru.</p>
+        </div>
+      </section>
+
+      <!-- 13. Contact -->
+      <section id="contact">
+        <h2 class="text-xl font-semibold mb-3">13. Informasi Kontak</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Jika Anda memiliki pertanyaan tentang kebijakan privasi ini atau cara kami menangani data Anda, silakan hubungi kami:</p>
+          <div class="rounded-2xl border border-border/50 bg-card/50 p-6">
+            <p class="text-sm"><strong class="text-foreground">Ruang Cipta Digital</strong></p>
+            <p class="text-sm mt-1">Email: privacy@myqalam.id</p>
+            <p class="text-sm mt-1">Platform: My Qalam</p>
+            <p class="text-sm mt-1">Lokasi: Indonesia</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</Root>

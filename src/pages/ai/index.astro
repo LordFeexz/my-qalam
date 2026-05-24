@@ -1,0 +1,193 @@
+---
+export const prerender = true;
+import Root from "$libs/components/layouts/Root.astro";
+import type { PageProps } from "$libs/interfaces/global";
+import type {
+  BreadcrumbList,
+  WebPage,
+  SoftwareApplication,
+  WithContext,
+} from "schema-dts";
+
+const baseUrl = import.meta.env.PUBLIC_DOMAIN;
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Asisten AI - My Qalam",
+    description:
+      "Segera hadir! Asisten AI cerdas untuk membantu Anda memahami Al-Quran, Hadis, dan Sirah Nabawiyah.",
+  } as WithContext<WebPage>,
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Beranda", item: baseUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Asisten AI",
+        item: `${baseUrl}/ai`,
+      },
+    ],
+  } as WithContext<BreadcrumbList>,
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "My Qalam AI Assistant",
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "Web",
+    description:
+      "Asisten AI cerdas untuk membantu memahami Al-Quran, Hadis, dan Sirah.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "IDR",
+      availability: "https://schema.org/PreOrder",
+    },
+  } as WithContext<SoftwareApplication>,
+];
+
+const pageProps: PageProps = {
+  title: "Asisten AI - My Qalam",
+  description:
+    "Segera hadir! Asisten AI cerdas untuk membantu Anda memahami Al-Quran, Hadis, dan Sirah Nabawiyah.",
+  keywords: [
+    "AI Islam",
+    "asisten AI quran",
+    "chatbot hadis",
+    "AI tafsir",
+    "upcoming feature",
+  ],
+  robots: { index: true, follow: true },
+  opengraph: {
+    title: "Asisten AI - My Qalam",
+    description: "Segera hadir! Asisten AI cerdas untuk platform Islami.",
+    image: `${baseUrl}/logo.png`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Asisten AI - My Qalam",
+    description: "Segera hadir! Asisten AI cerdas untuk platform Islami.",
+    image: `${baseUrl}/logo.png`,
+  },
+  schemas,
+};
+
+const features = [
+  {
+    title: "Tanya Jawab Al-Quran",
+    description:
+      "Tanyakan makna ayat atau topik spesifik dalam Al-Quran dan dapatkan jawaban bersumber terpercaya.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+  },
+  {
+    title: "Ringkasan Tafsir",
+    description:
+      "Dapatkan intisari tafsir yang panjang menjadi poin-poin yang mudah dipahami.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
+  },
+  {
+    title: "Eksplorasi Hadis",
+    description:
+      "Cari hadis berdasarkan konteks kehidupan sehari-hari atau masalah spesifik.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`,
+  },
+  {
+    title: "Kutipan Pintar",
+    description:
+      "Sistem otomatis merujuk dan mencantumkan sumber asli (Ayat/Nomor Hadis) dengan akurat.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>`,
+  },
+];
+---
+
+<Root {...pageProps}>
+  <div class="mx-auto max-w-4xl px-4 py-16 sm:px-6">
+    <div class="flex flex-col items-center text-center mb-16">
+      <div class="relative w-24 h-24 mb-8">
+        <div
+          class="absolute inset-0 bg-primary/20 blur-2xl rounded-full animate-pulse"
+        >
+        </div>
+        <div
+          class="relative w-full h-full flex items-center justify-center bg-card border border-primary/20 rounded-2xl shadow-xl"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="48"
+            height="48"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-primary"
+            ><path
+              d="M12 2a4 4 0 0 1 4 4v1a1 1 0 0 0 1 1h1a4 4 0 0 1 0 8h-1a1 1 0 0 0-1 1v1a4 4 0 0 1-8 0v-1a1 1 0 0 0-1-1H6a4 4 0 0 1 0-8h1a1 1 0 0 0 1-1V6a4 4 0 0 1 4-4z"
+            ></path><circle cx="12" cy="12" r="2"></circle></svg
+          >
+        </div>
+        <div
+          class="absolute -top-2 -right-2 bg-accent text-accent-foreground text-[10px] font-bold px-2 py-1 rounded-full border border-border shadow-sm transform rotate-12"
+        >
+          SOON
+        </div>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+        Asisten <span
+          class="text-transparent bg-clip-text bg-linear-to-r from-primary to-chart-1"
+          >AI Cerdas</span
+        >
+      </h1>
+      <p class="text-lg text-muted-foreground max-w-2xl">
+        Kami sedang mengembangkan pengalaman baru untuk mempermudah Anda dalam
+        mempelajari dan memahami literatur Islam.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+      {
+        features.map((feature) => (
+          <div class="p-6 rounded-2xl border border-border/50 bg-card/50 hover:bg-card hover:border-primary/30 transition-all duration-300 group">
+            <div
+              class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300"
+              set:html={feature.icon}
+            />
+            <h3 class="text-xl font-semibold mb-2">{feature.title}</h3>
+            <p class="text-muted-foreground leading-relaxed">
+              {feature.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div
+      class="text-center bg-muted/30 border border-border/50 rounded-3xl p-8 sm:p-12 relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-linear-to-b from-transparent to-primary/5"
+      >
+      </div>
+      <div class="relative z-10 flex flex-col items-center">
+        <h2 class="text-2xl font-bold mb-3">Nantikan Kehadirannya!</h2>
+        <p class="text-muted-foreground mb-8 max-w-md">
+          Fitur ini masih dalam tahap pengembangan untuk memastikan respons yang
+          akurat, aman, dan dapat diandalkan.
+        </p>
+        <button
+          type="button"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 py-2"
+          disabled
+        >
+          Akan Segera Hadir
+        </button>
+      </div>
+    </div>
+  </div>
+</Root>

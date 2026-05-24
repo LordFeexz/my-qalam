@@ -1,0 +1,505 @@
+---
+export const prerender = true;
+import Root from "$libs/components/layouts/Root.astro";
+import type { PageProps } from "$libs/interfaces/global";
+import type {
+  BreadcrumbList,
+  WebPage,
+  Organization,
+  WithContext,
+} from "schema-dts";
+
+const baseUrl = import.meta.env.PUBLIC_DOMAIN;
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Tentang Kami - My Qalam",
+    description:
+      "Kenali My Qalam — platform belajar Islam modern yang menyediakan Al-Quran, hadis, tafsir, dan sirah.",
+    publisher: { "@type": "Organization", name: "Ruang Cipta Digital" },
+  } as WithContext<WebPage>,
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Beranda", item: baseUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Tentang Kami",
+        item: `${baseUrl}/about`,
+      },
+    ],
+  } as WithContext<BreadcrumbList>,
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Ruang Cipta Digital",
+    url: baseUrl,
+    logo: `${baseUrl}/logo.png`,
+    description:
+      "Perusahaan teknologi Indonesia yang membangun ekosistem digital untuk pendidikan dan produktivitas.",
+    foundingDate: "2026",
+    areaServed: "Indonesia",
+    brand: [
+      { "@type": "Brand", name: "My Qalam" },
+      {
+        "@type": "Brand",
+        name: "Career Mate",
+        url: "https://career-mate.site/id",
+      },
+      { "@type": "Brand", name: "DGTool", url: "https://dgtool.site" },
+    ],
+  } as WithContext<Organization>,
+];
+
+const pageProps: PageProps = {
+  title: "Tentang Kami - My Qalam",
+  description:
+    "Kenali My Qalam — platform belajar Islam modern: Al-Quran, hadis, tafsir, sirah nabawiyah, dan asisten AI. Gratis dan mudah diakses.",
+  keywords: [
+    "tentang my qalam",
+    "platform belajar islam",
+    "belajar al-quran",
+    "hadis online",
+    "tafsir digital",
+    "sirah nabawiyah",
+    "ruang cipta digital",
+  ],
+  robots: { index: true, follow: true },
+  opengraph: {
+    title: "Tentang Kami - My Qalam",
+    description:
+      "Platform belajar Islam modern — Al-Quran, hadis, tafsir, dan sirah, gratis untuk semua.",
+    image: `${baseUrl}/logo.png`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tentang Kami - My Qalam",
+    description:
+      "Platform belajar Islam modern — Al-Quran, hadis, tafsir, dan sirah, gratis untuk semua.",
+    image: `${baseUrl}/logo.png`,
+  },
+  schemas,
+};
+
+const features = [
+  {
+    title: "Al-Qur'an Digital",
+    description:
+      "Baca Al-Qur'an lengkap dengan terjemahan bahasa Indonesia dan tafsir dari sumber terpercaya.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+  },
+  {
+    title: "Koleksi Hadis",
+    description:
+      "Akses ribuan hadis dari kitab-kitab utama seperti Shahih Bukhari, Shahih Muslim, dan lainnya.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>`,
+  },
+  {
+    title: "Sirah Nabawiyah",
+    description:
+      "Pelajari perjalanan hidup Nabi Muhammad ﷺ secara kronologis dengan narasi yang mudah dipahami.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  },
+  {
+    title: "Asisten AI",
+    description:
+      "Tanya jawab berbasis AI yang merujuk sumber asli — bukan pengganti ulama, melainkan alat bantu.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a1 1 0 0 0 1 1h1a4 4 0 0 1 0 8h-1a1 1 0 0 0-1 1v1a4 4 0 0 1-8 0v-1a1 1 0 0 0-1-1H6a4 4 0 0 1 0-8h1a1 1 0 0 0 1-1V6a4 4 0 0 1 4-4z"/><circle cx="12" cy="12" r="2"/></svg>`,
+  },
+];
+
+const roadmap = [
+  {
+    phase: "Fase 1",
+    title: "Fondasi Konten",
+    desc: "Al-Qur'an, hadis, dan sirah dengan pencarian lengkap.",
+    status: "done",
+  },
+  {
+    phase: "Fase 2",
+    title: "Asisten AI",
+    desc: "Tanya jawab cerdas berbasis sumber Islami terpercaya.",
+    status: "current",
+  },
+  {
+    phase: "Fase 3",
+    title: "Akun & Sinkronisasi",
+    desc: "Sistem akun opsional untuk sinkronisasi bookmark dan riwayat.",
+    status: "upcoming",
+  },
+  {
+    phase: "Fase 4",
+    title: "Langganan & API",
+    desc: "Paket premium dengan fitur lanjutan dan akses API untuk developer.",
+    status: "upcoming",
+  },
+];
+---
+
+<Root {...pageProps}>
+  <div class="mx-auto max-w-4xl px-4 py-16 sm:px-6">
+    <!-- Hero -->
+    <section id="hero" class="mb-20 text-center">
+      <div
+        class="inline-flex items-center gap-2 rounded-full border border-border/50 bg-muted/50 px-4 py-1.5 text-sm text-muted-foreground mb-6"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path
+            d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg
+        >
+        Platform Belajar Islam
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
+        Memudahkan Setiap Muslim<br />
+        <span
+          class="text-transparent bg-clip-text bg-linear-to-r from-primary to-chart-2"
+          >Belajar Islam</span
+        >
+      </h1>
+      <p
+        class="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+      >
+        My Qalam adalah platform digital yang menyajikan Al-Qur'an, hadis,
+        tafsir, dan sirah nabawiyah secara terbuka, modern, dan mudah diakses —
+        langsung dari browser, tanpa perlu akun.
+      </p>
+    </section>
+
+    <!-- Mission -->
+    <section id="mission" class="mb-20">
+      <div
+        class="rounded-3xl border border-border/50 bg-muted/30 p-8 sm:p-12 relative overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent"
+        >
+        </div>
+        <div class="relative z-10">
+          <h2 class="text-2xl font-bold mb-4">Misi Kami</h2>
+          <p class="text-muted-foreground leading-relaxed text-lg">
+            Kami percaya bahwa ilmu agama harus mudah dijangkau oleh siapa saja,
+            kapan saja, dan di mana saja. My Qalam hadir untuk menghilangkan
+            hambatan dalam mengakses literatur Islam fundamental — tanpa biaya,
+            tanpa registrasi, tanpa kerumitan teknis. Cukup buka browser, dan
+            mulailah belajar.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What is My Qalam -->
+    <section id="about-platform" class="mb-20">
+      <h2 class="text-2xl font-bold mb-4">Apa Itu My Qalam?</h2>
+      <div class="space-y-4 text-muted-foreground leading-relaxed">
+        <p>
+          My Qalam adalah platform web yang dirancang untuk Muslim umum dan
+          pelajar yang ingin mendalami ajaran Islam melalui sumber-sumber
+          primer. Platform ini menyediakan akses ke Al-Qur'an lengkap dengan
+          terjemahan dan tafsir, koleksi hadis dari berbagai kitab utama, serta
+          narasi sirah nabawiyah.
+        </p>
+        <p>
+          Seluruh konten disajikan dalam antarmuka modern yang responsif dan
+          nyaman untuk dibaca, baik di perangkat mobile maupun desktop. Platform
+          ini sepenuhnya berbasis browser — tidak perlu mengunduh aplikasi atau
+          membuat akun untuk mengakses konten.
+        </p>
+        <p>
+          Ke depan, My Qalam juga menyediakan asisten AI yang mampu menjawab
+          pertanyaan seputar Islam berdasarkan sumber yang telah terverifikasi,
+          bukan opini atau interpretasi mandiri.
+        </p>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="mb-20">
+      <h2 class="text-2xl font-bold mb-8">Fitur Utama</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {
+          features.map((f) => (
+            <div class="p-6 rounded-2xl border border-border/50 bg-card/50 hover:bg-card hover:border-primary/30 transition-all duration-300 group">
+              <div
+                class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300"
+                set:html={f.icon}
+              />
+              <h3 class="text-xl font-semibold mb-2">{f.title}</h3>
+              <p class="text-muted-foreground leading-relaxed">
+                {f.description}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Vision -->
+    <section id="vision" class="mb-20">
+      <div class="rounded-3xl border border-border/50 bg-card/50 p-8 sm:p-12">
+        <h2 class="text-2xl font-bold mb-4">Visi</h2>
+        <div class="space-y-4 text-muted-foreground leading-relaxed">
+          <p>
+            Kami membayangkan dunia di mana setiap Muslim — di mana pun berada —
+            dapat mengakses ilmu agama fundamental dengan mudah, tanpa hambatan
+            teknologi, biaya, atau bahasa.
+          </p>
+          <p>
+            My Qalam bertujuan menjadi referensi digital terpercaya untuk
+            belajar Islam: bukan menggantikan guru atau ulama, melainkan menjadi
+            jembatan awal yang membantu umat memahami dasar-dasar ajaran Islam
+            melalui sumber yang otentik dan terverifikasi.
+          </p>
+          <p>
+            Dengan pendekatan teknologi modern — termasuk AI yang bertanggung
+            jawab — kami ingin menciptakan pengalaman belajar yang relevan untuk
+            generasi digital tanpa mengorbankan keakuratan dan adab dalam
+            berilmu.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Ruang Cipta Digital -->
+    <section id="company" class="mb-20">
+      <h2 class="text-2xl font-bold mb-4">Tentang Ruang Cipta Digital</h2>
+      <div class="space-y-4 text-muted-foreground leading-relaxed">
+        <p>
+          My Qalam adalah bagian dari <strong class="text-foreground"
+            >Ruang Cipta Digital</strong
+          > — sebuah perusahaan teknologi Indonesia yang berfokus membangun produk
+          digital di bidang pendidikan, karir, dan produktivitas.
+        </p>
+        <p>Ekosistem Ruang Cipta Digital mencakup beberapa produk:</p>
+        <ul class="list-none space-y-3 my-4">
+          <li class="flex items-start gap-3">
+            <span
+              class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary text-xs font-bold"
+              >Q</span
+            >
+            <span
+              ><strong class="text-foreground">My Qalam</strong> — Platform belajar
+              Islam digital</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <span
+              class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary text-xs font-bold"
+              >C</span
+            >
+            <span
+              ><strong class="text-foreground">
+                <a
+                  href="https://career-mate.site/id?utm_source=my-qalam"
+                  target="__blank"
+                >
+                  Career Mate
+                </a>
+              </strong> — Platform pengembangan karir dan CV</span
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <span
+              class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary text-xs font-bold"
+              >D</span
+            >
+            <span
+              ><strong class="text-foreground">
+                <a
+                  href="https://dgtool.site?utm_source=my-qalam"
+                  target="__blank"
+                >
+                  Digitool
+                </a>
+              </strong> — Alat produktivitas digital</span
+            >
+          </li>
+        </ul>
+        <p>
+          Kami adalah tim kecil yang percaya bahwa teknologi seharusnya
+          mempermudah kehidupan — bukan memperumitnya. Setiap produk kami
+          dirancang dengan prinsip kesederhanaan, keterbukaan, dan dampak nyata.
+        </p>
+      </div>
+    </section>
+
+    <!-- AI Disclaimer -->
+    <section id="ai-disclaimer" class="mb-20">
+      <div
+        class="rounded-3xl border border-destructive/30 bg-destructive/5 p-8 sm:p-12"
+      >
+        <div class="flex items-start gap-4">
+          <div
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-destructive/10 text-destructive"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path
+                d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"
+              ></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg
+            >
+          </div>
+          <div>
+            <h2 class="text-xl font-bold mb-3">Disclaimer: Fitur Asisten AI</h2>
+            <div
+              class="space-y-3 text-muted-foreground leading-relaxed text-sm"
+            >
+              <p>
+                My Qalam menyediakan fitur asisten AI sebagai <strong
+                  class="text-foreground">alat bantu</strong
+                > untuk mempermudah pencarian dan pemahaman konten Islami. Fitur ini
+                dirancang untuk merujuk pada sumber-sumber yang tersedia di platform.
+              </p>
+              <p>
+                Namun, <strong class="text-foreground"
+                  >AI bukan pengganti ulama, guru, atau otoritas keagamaan</strong
+                >. Jawaban AI bersifat asistensi dan dapat mengandung
+                ketidakakuratan. Pengguna sangat dianjurkan untuk melakukan
+                verifikasi mandiri, terutama dalam hal hukum fikih dan keputusan
+                keagamaan.
+              </p>
+              <p>
+                My Qalam tidak bertanggung jawab atas keputusan yang diambil
+                berdasarkan jawaban AI. Selalu rujuk kepada sumber asli dan
+                konsultasikan dengan ahli agama yang berkompeten.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section id="roadmap" class="mb-20">
+      <h2 class="text-2xl font-bold mb-8">Rencana Pengembangan</h2>
+      <div class="space-y-4">
+        {
+          roadmap.map((item) => (
+            <div
+              class:list={[
+                "flex items-start gap-4 rounded-2xl border p-6 transition-all duration-300",
+                item.status === "done"
+                  ? "border-primary/30 bg-primary/5"
+                  : item.status === "current"
+                    ? "border-chart-1/50 bg-chart-1/5"
+                    : "border-border/50 bg-card/50",
+              ]}
+            >
+              <div
+                class:list={[
+                  "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold",
+                  item.status === "done"
+                    ? "bg-primary text-primary-foreground"
+                    : item.status === "current"
+                      ? "bg-chart-1/20 text-chart-1"
+                      : "bg-muted text-muted-foreground",
+                ]}
+              >
+                {item.status === "done" ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                ) : item.status === "current" ? (
+                  <div class="h-3 w-3 rounded-full bg-chart-1 animate-pulse" />
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                  </svg>
+                )}
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                    {item.phase}
+                  </span>
+                  {item.status === "done" && (
+                    <span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                      SELESAI
+                    </span>
+                  )}
+                  {item.status === "current" && (
+                    <span class="text-[10px] font-bold text-chart-1 bg-chart-1/10 px-2 py-0.5 rounded-full">
+                      AKTIF
+                    </span>
+                  )}
+                </div>
+                <h3 class="text-lg font-semibold">{item.title}</h3>
+                <p class="text-muted-foreground text-sm mt-1">{item.desc}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Closing -->
+    <section id="closing" class="text-center">
+      <div
+        class="rounded-3xl border border-border/50 bg-muted/30 p-8 sm:p-12 relative overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-linear-to-b from-transparent to-primary/5"
+        >
+        </div>
+        <div class="relative z-10">
+          <h2 class="text-2xl font-bold mb-3">Mari Belajar Bersama</h2>
+          <p
+            class="text-muted-foreground mb-8 max-w-lg mx-auto leading-relaxed"
+          >
+            My Qalam masih terus berkembang. Kami berkomitmen untuk menyajikan
+            konten yang akurat, antarmuka yang nyaman, dan teknologi yang
+            bertanggung jawab. Terima kasih telah menjadi bagian dari perjalanan
+            ini.
+          </p>
+          <a
+            href="/search"
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 py-2"
+          >
+            Mulai Eksplorasi
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Root>

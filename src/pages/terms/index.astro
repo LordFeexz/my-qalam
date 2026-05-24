@@ -1,0 +1,256 @@
+---
+export const prerender = true;
+import Root from "$libs/components/layouts/Root.astro";
+import type { PageProps } from "$libs/interfaces/global";
+import type { BreadcrumbList, WebPage, WithContext } from "schema-dts";
+
+const baseUrl = import.meta.env.PUBLIC_DOMAIN;
+const lastUpdated = "24 Mei 2026";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Ketentuan Penggunaan - My Qalam",
+    description:
+      "Ketentuan penggunaan platform My Qalam — syarat dan ketentuan yang berlaku saat menggunakan layanan kami.",
+  } as WithContext<WebPage>,
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Beranda", item: baseUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Ketentuan Penggunaan",
+        item: `${baseUrl}/terms`,
+      },
+    ],
+  } as WithContext<BreadcrumbList>,
+];
+
+const pageProps: PageProps = {
+  title: "Ketentuan Penggunaan - My Qalam",
+  description:
+    "Ketentuan penggunaan My Qalam. Pahami syarat dan ketentuan saat menggunakan platform belajar Islam ini.",
+  keywords: [
+    "ketentuan penggunaan",
+    "terms of service",
+    "syarat penggunaan",
+    "my qalam terms",
+    "aturan platform",
+  ],
+  robots: { index: true, follow: true },
+  opengraph: {
+    title: "Ketentuan Penggunaan - My Qalam",
+    description:
+      "Syarat dan ketentuan penggunaan platform My Qalam.",
+    image: `${baseUrl}/logo.png`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Ketentuan Penggunaan - My Qalam",
+    description:
+      "Syarat dan ketentuan penggunaan platform My Qalam.",
+    image: `${baseUrl}/logo.png`,
+  },
+  schemas,
+};
+---
+
+<Root {...pageProps}>
+  <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+    <div class="mb-12">
+      <div class="inline-flex items-center gap-2 rounded-full border border-border/50 bg-muted/50 px-4 py-1.5 text-sm text-muted-foreground mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Dokumen Legal
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Ketentuan Penggunaan</h1>
+      <p class="text-muted-foreground">Terakhir diperbarui: {lastUpdated}</p>
+    </div>
+
+    <div class="prose-custom space-y-12">
+      <!-- 1. Acceptance of Terms -->
+      <section id="acceptance">
+        <h2 class="text-xl font-semibold mb-3">1. Penerimaan Ketentuan</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Dengan mengakses dan menggunakan My Qalam ("platform", "layanan"), Anda menyetujui dan terikat oleh ketentuan penggunaan ini. Jika Anda tidak setuju dengan ketentuan ini, Anda dipersilakan untuk tidak menggunakan platform.</p>
+          <p>My Qalam dikembangkan dan dikelola oleh Ruang Cipta Digital. Ketentuan ini berlaku untuk seluruh penggunaan platform, termasuk akses ke konten Al-Qur'an, hadis, sirah, dan fitur asisten AI.</p>
+          <p>Saat ini, My Qalam tidak memerlukan pendaftaran akun. Penggunaan platform dianggap sebagai persetujuan terhadap ketentuan ini.</p>
+        </div>
+      </section>
+
+      <!-- 2. Description of Service -->
+      <section id="service-description">
+        <h2 class="text-xl font-semibold mb-3">2. Deskripsi Layanan</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>My Qalam adalah platform edukasi berbasis web yang menyediakan:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li><strong class="text-foreground">Al-Qur'an:</strong> Teks Arab dengan terjemahan bahasa Indonesia dan tafsir</li>
+            <li><strong class="text-foreground">Hadis:</strong> Koleksi hadis dari berbagai kitab utama</li>
+            <li><strong class="text-foreground">Sirah Nabawiyah:</strong> Narasi perjalanan hidup Nabi Muhammad ﷺ</li>
+            <li><strong class="text-foreground">Asisten AI:</strong> Fitur tanya jawab untuk membantu memahami konten Islami</li>
+            <li><strong class="text-foreground">Pencarian:</strong> Pencarian terpadu lintas konten</li>
+          </ul>
+          <p>Seluruh konten bersifat edukatif dan ditujukan sebagai referensi awal untuk mempelajari Islam.</p>
+        </div>
+      </section>
+
+      <!-- 3. AI Disclaimer (Critical Section) -->
+      <section id="ai-disclaimer">
+        <h2 class="text-xl font-semibold mb-3">3. Disclaimer Asisten AI</h2>
+        <div class="rounded-3xl border border-destructive/30 bg-destructive/5 p-6 sm:p-8">
+          <div class="flex items-start gap-4">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-destructive/10 text-destructive">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+            </div>
+            <div class="space-y-3 text-muted-foreground leading-relaxed text-sm">
+              <p class="text-foreground font-semibold text-base">Bagian ini sangat penting untuk dibaca dan dipahami.</p>
+              <p>Fitur asisten AI pada My Qalam dirancang sebagai <strong class="text-foreground">alat bantu asistensi</strong>, bukan sebagai sumber otoritatif dalam bidang keagamaan. Dengan menggunakan fitur ini, Anda memahami dan menyetujui bahwa:</p>
+              <ul class="list-disc list-inside space-y-2 ml-2">
+                <li>AI <strong class="text-foreground">bukan ulama, mufti, atau otoritas keagamaan</strong></li>
+                <li>Jawaban AI dapat mengandung <strong class="text-foreground">ketidakakuratan atau kesalahan</strong></li>
+                <li>AI tidak memberikan fatwa atau keputusan hukum fikih</li>
+                <li>Jawaban AI dihasilkan berdasarkan pemrosesan teks dan tidak mencerminkan pemahaman spiritual</li>
+                <li>Pengguna <strong class="text-foreground">wajib memverifikasi</strong> informasi yang diperoleh dengan merujuk pada sumber asli dan berkonsultasi dengan ahli agama yang berkompeten</li>
+              </ul>
+              <p>My Qalam <strong class="text-foreground">tidak bertanggung jawab</strong> atas keputusan, tindakan, atau keyakinan yang dibentuk berdasarkan jawaban dari asisten AI. Penggunaan fitur ini sepenuhnya menjadi tanggung jawab pengguna.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. User Responsibilities -->
+      <section id="user-responsibilities">
+        <h2 class="text-xl font-semibold mb-3">4. Tanggung Jawab Pengguna</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Sebagai pengguna My Qalam, Anda bertanggung jawab untuk:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li>Menggunakan platform secara bijak dan beradab</li>
+            <li>Memverifikasi informasi agama dengan sumber terpercaya dan ahli yang berkompeten</li>
+            <li>Tidak menyalahgunakan fitur AI untuk tujuan yang menyesatkan</li>
+            <li>Tidak mencoba merusak, mengganggu, atau mengeksploitasi platform</li>
+            <li>Mematuhi hukum dan peraturan yang berlaku di Indonesia</li>
+            <li>Tidak memasukkan data pribadi sensitif ke dalam fitur chat AI</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 5. Content Usage Rules -->
+      <section id="content-usage">
+        <h2 class="text-xl font-semibold mb-3">5. Aturan Penggunaan Konten</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Konten pada My Qalam disediakan untuk tujuan edukatif. Dalam menggunakan konten ini:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li>Anda dipersilakan membaca, mempelajari, dan merujuk konten untuk keperluan pribadi dan edukasi</li>
+            <li>Penyalinan massal atau scraping konten untuk tujuan komersial tanpa izin tidak diperkenankan</li>
+            <li>Konten dari sumber primer (Al-Qur'an, hadis) bersifat publik; atribusi yang tepat tetap diharapkan</li>
+            <li>Tafsir dan terjemahan mengikuti hak cipta dari penulis/penerbit aslinya</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 6. Intellectual Property -->
+      <section id="intellectual-property">
+        <h2 class="text-xl font-semibold mb-3">6. Kekayaan Intelektual</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Hak kekayaan intelektual terkait My Qalam meliputi:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li><strong class="text-foreground">Merek dan desain:</strong> Nama "My Qalam", logo, dan desain antarmuka adalah milik Ruang Cipta Digital</li>
+            <li><strong class="text-foreground">Kode sumber:</strong> Kode platform dilindungi oleh hak cipta</li>
+            <li><strong class="text-foreground">Konten primer:</strong> Teks Al-Qur'an dan hadis bersifat domain publik; terjemahan dan tafsir mengikuti hak cipta penulis asli</li>
+            <li><strong class="text-foreground">Konten editorial:</strong> Narasi sirah dan konten editorial lainnya yang dibuat oleh tim My Qalam dilindungi hak cipta</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 7. Limitation of Liability -->
+      <section id="liability">
+        <h2 class="text-xl font-semibold mb-3">7. Batasan Tanggung Jawab</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>My Qalam disediakan "sebagaimana adanya" (<em>as is</em>) tanpa jaminan dalam bentuk apa pun. Kami berusaha menyajikan konten yang akurat, namun:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li>Kami tidak menjamin keakuratan 100% dari seluruh terjemahan, tafsir, atau jawaban AI</li>
+            <li>Kami tidak bertanggung jawab atas kerugian yang timbul dari penggunaan informasi di platform</li>
+            <li>Kami tidak bertanggung jawab atas gangguan layanan akibat faktor teknis</li>
+            <li>Kami tidak bertanggung jawab atas kehilangan data yang tersimpan di penyimpanan lokal browser</li>
+          </ul>
+          <p>Pengguna disarankan untuk selalu melakukan verifikasi mandiri dan tidak menjadikan platform sebagai satu-satunya sumber referensi keagamaan.</p>
+        </div>
+      </section>
+
+      <!-- 8. Service Availability -->
+      <section id="availability">
+        <h2 class="text-xl font-semibold mb-3">8. Ketersediaan Layanan</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Kami berupaya menjaga ketersediaan platform secara optimal, namun:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li>Layanan dapat mengalami gangguan sementara untuk pemeliharaan atau pembaruan</li>
+            <li>Fitur tertentu mungkin ditambahkan, diubah, atau dihentikan sesuai kebutuhan pengembangan</li>
+            <li>Kami tidak menjamin ketersediaan layanan 24/7 tanpa gangguan</li>
+          </ul>
+          <p>Kami akan berusaha memberikan pemberitahuan untuk pemeliharaan terjadwal jika memungkinkan.</p>
+        </div>
+      </section>
+
+      <!-- 9. Future Paid Features -->
+      <section id="paid-features">
+        <h2 class="text-xl font-semibold mb-3">9. Fitur Berbayar di Masa Depan</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>My Qalam saat ini tersedia secara gratis. Di masa depan, kami berencana memperkenalkan:</p>
+          <div class="rounded-2xl border border-border/50 bg-card/50 p-6 space-y-4">
+            <div>
+              <h3 class="text-sm font-semibold text-foreground mb-1">Paket Langganan (Subscription)</h3>
+              <p class="text-sm">Akses ke fitur premium seperti AI lanjutan, konten eksklusif, dan fitur personalisasi.</p>
+            </div>
+            <hr class="border-border/50" />
+            <div>
+              <h3 class="text-sm font-semibold text-foreground mb-1">Akses API</h3>
+              <p class="text-sm">API untuk developer yang ingin mengintegrasikan data Islami ke dalam aplikasi mereka.</p>
+            </div>
+          </div>
+          <p class="mt-4">Konten dasar (Al-Qur'an, hadis, sirah) akan tetap dapat diakses secara gratis. Ketentuan khusus untuk layanan berbayar akan diumumkan dan diberlakukan terpisah saat layanan tersebut diluncurkan.</p>
+        </div>
+      </section>
+
+      <!-- 10. Changes to Terms -->
+      <section id="terms-changes">
+        <h2 class="text-xl font-semibold mb-3">10. Perubahan Ketentuan</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Kami berhak memperbarui ketentuan penggunaan ini dari waktu ke waktu. Perubahan mungkin terjadi saat:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li>Platform menambahkan fitur atau layanan baru</li>
+            <li>Terjadi perubahan regulasi yang relevan</li>
+            <li>Diperlukan klarifikasi atau penyesuaian ketentuan</li>
+          </ul>
+          <p>Perubahan signifikan akan diumumkan melalui platform. Penggunaan berlanjut setelah perubahan dianggap sebagai persetujuan terhadap ketentuan yang diperbarui.</p>
+        </div>
+      </section>
+
+      <!-- 11. Governing Law -->
+      <section id="governing-law">
+        <h2 class="text-xl font-semibold mb-3">11. Hukum yang Berlaku</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Ketentuan penggunaan ini diatur oleh dan ditafsirkan sesuai dengan hukum Republik Indonesia. Setiap sengketa yang timbul dari penggunaan platform akan diselesaikan melalui musyawarah terlebih dahulu.</p>
+          <p>Jika musyawarah tidak mencapai kesepakatan, sengketa akan diselesaikan melalui jalur hukum yang berlaku di wilayah yurisdiksi Indonesia.</p>
+        </div>
+      </section>
+
+      <!-- 12. Contact -->
+      <section id="contact">
+        <h2 class="text-xl font-semibold mb-3">12. Kontak</h2>
+        <div class="space-y-3 text-muted-foreground leading-relaxed">
+          <p>Jika Anda memiliki pertanyaan tentang ketentuan penggunaan ini, silakan hubungi kami:</p>
+          <div class="rounded-2xl border border-border/50 bg-card/50 p-6">
+            <p class="text-sm"><strong class="text-foreground">Ruang Cipta Digital</strong></p>
+            <p class="text-sm mt-1">Email: legal@myqalam.id</p>
+            <p class="text-sm mt-1">Platform: My Qalam</p>
+            <p class="text-sm mt-1">Lokasi: Indonesia</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</Root>
